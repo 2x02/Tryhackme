@@ -1,0 +1,8 @@
+tree 8c94b154aef92380e29a3f16f1a889b56127cf13
+parent e56eaa8e29b589976f33d76bc58a0c4dfb9315b1
+author Hydragyrum <hydragyrum@gmail.com> 1595540252 +0200
+committer Hydragyrum <hydragyrum@gmail.com> 1595540252 +0200
+
+Security says obfuscation isn't enough.
+
+They want me to use something called 'SHA-512'

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Awesome!</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body onload="checkCookie()">
+    <p class="rainbow-text">Awesome! Use the password you input as the flag!</p>
+
+    <script>
+      function checkCookie() {
+        if (
+          document.cookie.split(";").some((item) => item.includes("login=1"))
+        ) {
+          console.log('The cookie "login" has "1" for value');
+        } else {
+          window.location.href = "/index.html";
+        }
+      }
+    </script>
+  </body>
+</html>

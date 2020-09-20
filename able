@@ -1,0 +1,109 @@
+HTTP request [#1]:
+GET / HTTP/1.1
+Cache-control: no-cache
+User-agent: sqlmap/1.4.8#stable (http://sqlmap.org)
+Host: 10.10.81.72
+Accept: */*
+Accept-encoding: gzip,deflate
+Connection: close
+
+HTTP response [#1] (200 OK):
+Host: 10.10.81.72
+Connection: close
+X-Powered-By: PHP/7.0.33-0ubuntu0.16.04.7
+Content-type: text/html; charset=UTF-8
+URI: http://10.10.81.72/
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Record Form</title>
+</head>
+<body>
+<form action="/" method="post">
+    <p>msg: </p> <input type="text" name="msg" id="msgg">
+</form>
+</body>
+</html>
+
+
+
+############################################################################
+
+HTTP request [#2]:
+GET / HTTP/1.1
+Cache-control: no-cache
+User-agent: sqlmap/1.4.8#stable (http://sqlmap.org)
+Host: 10.10.81.72
+Accept: */*
+Accept-encoding: gzip,deflate
+Connection: close
+
+HTTP response [#2] (200 OK):
+Host: 10.10.81.72
+Connection: close
+X-Powered-By: PHP/7.0.33-0ubuntu0.16.04.7
+Content-type: text/html; charset=UTF-8
+URI: http://10.10.81.72/
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Record Form</title>
+</head>
+<body>
+<form action="/" method="post">
+    <p>msg: </p> <input type="text" name="msg" id="msgg">
+</form>
+</body>
+</html>
+
+
+
+############################################################################
+
+HTTP request [#1]:
+POST / HTTP/1.1
+Cache-control: no-cache
+User-agent: sqlmap/1.4.8#stable (http://sqlmap.org)
+Host: 10.10.81.72
+Accept: */*
+Accept-encoding: gzip,deflate
+Content-type: application/x-www-form-urlencoded; charset=utf-8
+Content-length: 8
+Connection: close
+
+msg=sohH
+
+HTTP response [#1] (200 OK):
+Host: 10.10.81.72
+Connection: close
+X-Powered-By: PHP/7.0.33-0ubuntu0.16.04.7
+Content-type: text/html; charset=UTF-8
+URI: http://10.10.81.72:80/
+
+Error: SELECT * FROM msg WHERE msg = 'sohH'<br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Record Form</title>
+</head>
+<body>
+<form action="/" method="post">
+    <p>msg: </p> <input type="text" name="msg" id="msgg">
+</form>
+</body>
+</html>
+
+
+
+############################################################################
+

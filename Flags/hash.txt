@@ -1,0 +1,1 @@
+flag2.txt.zip/flag2.txt:$zip2$*0*1*0*882b9e65d90b48e7*337a*3d*0ca367209d2a043bd5eed3b9fbfcb57083552cf0cdcaf23208f654faf243d45cab4f5ac04c67e831bba1dd890b1970eb3f6a9d110f36cd1fb53125e6ac*d9f7e5c3cc4b3a5403c2*$/zip2$:flag2.txt:flag2.txt.zip:flag2.txt.zip

@@ -1,0 +1,6 @@
+tree 4e7178fa5b68fec15e54f2b79ace6f9ce0169e01
+parent 2eb93ac3534155069a8ef59cb25b9c1971d5d199
+author Hydragyrum <hydragyrum@gmail.com> 1595542885 +0200
+committer Hydragyrum <hydragyrum@gmail.com> 1595542885 +0200
+
+add gitlab-ci config to build docker file.

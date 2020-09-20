@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Tue Sep 15 02:00:27 2020 as: nmap -sC -sV -oA nmap/Daily_Bugle 10.10.239.215
+Host: 10.10.239.215 ()	Status: Up
+Host: 10.10.239.215 ()	Ports: 22/open/tcp//ssh//OpenSSH 7.4 (protocol 2.0)/, 80/open/tcp//http//Apache httpd 2.4.6 ((CentOS) PHP|5.6.40)/, 3306/open/tcp//mysql//MariaDB (unauthorized)/, 3690/filtered/tcp//svn///	Ignored State: closed (996)
+# Nmap done at Tue Sep 15 02:01:12 2020 -- 1 IP address (1 host up) scanned in 44.98 seconds

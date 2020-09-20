@@ -1,0 +1,6 @@
+tree aef68b1e25df81a8c96ee4d57b20cc9f7a1ebee5
+parent d6df4000639981d032f628af2b4d03b8eff31213
+author Hydragyrum <hydragyrum@gmail.com> 1595542118 +0200
+committer Hydragyrum <hydragyrum@gmail.com> 1595542118 +0200
+
+setup dockerfile and setup defaults.

