@@ -62,6 +62,8 @@ Interesting list of open ports. Let's do one better with nmap scanning the disco
               |   date: 2020-09-20T06:39:56
               |_  start_date: 2020-09-20T06:24:29
 
+Namp scan result showed that its a window box 
+
 Then I bruteforce for directory using dirsearch.py. But found nothing with that search.
 
 --> sudo python3 /opt/dirsearch/-dirsearch.py -u http://10.10.28.239/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e php,html,apsx -x 404,403
