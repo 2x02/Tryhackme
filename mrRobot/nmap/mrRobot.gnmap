@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Mon Sep 21 11:13:03 2020 as: nmap -sC -sV -p80,443 -oA nmap/mrRobot 10.10.151.165
+Host: 10.10.151.165 ()	Status: Up
+Host: 10.10.151.165 ()	Ports: 80/open/tcp//http//Apache httpd/, 443/open/tcp//ssl|http//Apache httpd/
+# Nmap done at Mon Sep 21 11:13:40 2020 -- 1 IP address (1 host up) scanned in 37.38 seconds
