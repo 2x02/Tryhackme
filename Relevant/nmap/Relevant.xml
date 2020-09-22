@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE nmaprun>
 <?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
-<!-- Nmap 7.80 scan initiated Sun Sep 20 12:07:59 2020 as: nmap -sC -sV -p80,445,135,139,49667,49669,49663,3389 -oA nmap/Relevent 10.10.28.239 -->
-<nmaprun scanner="nmap" args="nmap -sC -sV -p80,445,135,139,49667,49669,49663,3389 -oA nmap/Relevent 10.10.28.239" start="1600583879" startstr="Sun Sep 20 12:07:59 2020" version="7.80" xmloutputversion="1.04">
-<scaninfo type="connect" protocol="tcp" numservices="8" services="80,135,139,445,3389,49663,49667,49669"/>
+<!-- Nmap 7.80 scan initiated Tue Sep 22 11:47:41 2020 as: nmap -sC -sV -p80,135,139,445,3389,49663,49666,49668 -oA nmap/Relevant 10.10.83.165 -->
+<nmaprun scanner="nmap" args="nmap -sC -sV -p80,135,139,445,3389,49663,49666,49668 -oA nmap/Relevant 10.10.83.165" start="1600755461" startstr="Tue Sep 22 11:47:41 2020" version="7.80" xmloutputversion="1.04">
+<scaninfo type="connect" protocol="tcp" numservices="8" services="80,135,139,445,3389,49663,49666,49668"/>
 <verbose level="0"/>
 <debugging level="0"/>
-<host starttime="1600583879" endtime="1600584041"><status state="up" reason="syn-ack" reason_ttl="0"/>
-<address addr="10.10.28.239" addrtype="ipv4"/>
+<host starttime="1600755461" endtime="1600755536"><status state="up" reason="syn-ack" reason_ttl="0"/>
+<address addr="10.10.83.165" addrtype="ipv4"/>
 <hostnames>
 </hostnames>
 <ports><port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Microsoft HTTPAPI httpd" version="2.0" extrainfo="SSDP/UPnP" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service><script id="http-methods" output="&#xa;  Potentially risky methods: TRACE"><table key="Potentially risky methods">
@@ -19,13 +19,13 @@
 <port protocol="tcp" portid="135"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="msrpc" product="Microsoft Windows RPC" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
 <port protocol="tcp" portid="139"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="netbios-ssn" product="Microsoft Windows netbios-ssn" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
 <port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="microsoft-ds" product="Windows Server 2016 Standard Evaluation 14393 microsoft-ds" ostype="Windows Server 2008 R2 - 2012" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
-<port protocol="tcp" portid="3389"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ms-wbt-server" method="table" conf="3"/><script id="rdp-ntlm-info" output="&#xa;  Target_Name: RELEVANT&#xa;  NetBIOS_Domain_Name: RELEVANT&#xa;  NetBIOS_Computer_Name: RELEVANT&#xa;  DNS_Domain_Name: Relevant&#xa;  DNS_Computer_Name: Relevant&#xa;  Product_Version: 10.0.14393&#xa;  System_Time: 2020-09-20T06:39:55+00:00"><elem key="Target_Name">RELEVANT</elem>
+<port protocol="tcp" portid="3389"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ms-wbt-server" product="Microsoft Terminal Services" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service><script id="rdp-ntlm-info" output="&#xa;  Target_Name: RELEVANT&#xa;  NetBIOS_Domain_Name: RELEVANT&#xa;  NetBIOS_Computer_Name: RELEVANT&#xa;  DNS_Domain_Name: Relevant&#xa;  DNS_Computer_Name: Relevant&#xa;  Product_Version: 10.0.14393&#xa;  System_Time: 2020-09-22T06:18:02+00:00"><elem key="Target_Name">RELEVANT</elem>
 <elem key="NetBIOS_Domain_Name">RELEVANT</elem>
 <elem key="NetBIOS_Computer_Name">RELEVANT</elem>
 <elem key="DNS_Domain_Name">Relevant</elem>
 <elem key="DNS_Computer_Name">Relevant</elem>
 <elem key="Product_Version">10.0.14393</elem>
-<elem key="System_Time">2020-09-20T06:39:55+00:00</elem>
+<elem key="System_Time">2020-09-22T06:18:02+00:00</elem>
 </script><script id="ssl-cert" output="Subject: commonName=Relevant&#xa;Not valid before: 2020-07-24T23:16:08&#xa;Not valid after:  2021-01-23T23:16:08"><table key="subject">
 <elem key="commonName">Relevant</elem>
 </table>
@@ -33,10 +33,10 @@
 <elem key="commonName">Relevant</elem>
 </table>
 <table key="pubkey">
-<elem key="exponent">userdata: 0x5643806dfa68</elem>
-<elem key="type">rsa</elem>
-<elem key="modulus">userdata: 0x564381d8f8d8</elem>
+<elem key="modulus">userdata: 0x55c377c9e238</elem>
+<elem key="exponent">userdata: 0x55c377c9e1f8</elem>
 <elem key="bits">2048</elem>
+<elem key="type">rsa</elem>
 </table>
 <table key="extensions">
 <table>
@@ -56,26 +56,26 @@
 <elem key="md5">aa099a568e666a87ca067b93aeae7032</elem>
 <elem key="sha1">46f89a489216c45b555c6f42690e3aa0a694dc37</elem>
 <elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIC1DCCAbygAwIBAgIQQGj7dKFQuZhCRMXsDCZqSTANBgkqhkiG9w0BAQsFADAT&#xa;MREwDwYDVQQDEwhSZWxldmFudDAeFw0yMDA3MjQyMzE2MDhaFw0yMTAxMjMyMzE2&#xa;MDhaMBMxETAPBgNVBAMTCFJlbGV2YW50MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A&#xa;MIIBCgKCAQEAwgTRYzeGLuBEOEmrsMRfOK64fz6PLE3Uw99aXGf0ddBHPjhShmnN&#xa;sBD0/jDI5hRdZu67I5dJ9YteH++53TMK3NdKSWA66WRrbemRbzxcFhtMffULXgRh&#xa;aton8AAPtu9R897mEN7po7TGN89pRzADdmBH7X94iphp3YRSoWAG1wdbbPx7WuYh&#xa;zMqfmtPdWZUkiI3qbyGrlTx/pf5u2P+/3iqBmPZLx+k6GA2VdwU1gocVrnLoz7ss&#xa;EQV0VMGlbzM3cXI6A7VCnwZ5J62blFI4s1WuWmQsmgfG5IHcwwbjgOdq65eS8MPC&#xa;nVCl21lPLVuA9YG48cXhlYqCbr7jDNjirwIDAQABoyQwIjATBgNVHSUEDDAKBggr&#xa;BgEFBQcDATALBgNVHQ8EBAMCBDAwDQYJKoZIhvcNAQELBQADggEBAEnIUp/K7mlJ&#xa;ceQqSVVox+9Mnru4U0vL/zh+8foutJNbT65NWz1S7DVnn3vx4CPZ0e4c5IxVJXr2&#xa;5p37pvIqY98DdtG+TzUMP0geaXzVbqwFqUNd2w1hSABFrQKJbpvdRErwYr50Ecoe&#xa;EL6oaGvZ/wf+1X/kTH7VWr+KwwgHX8SgIJh16VgAMv/JPNqJgtKzqgmF5zUYicHS&#xa;WLmDI20EAB4PkfJ0TQN94GVoS4XaN4X4Tn0a8ab+kMERhOvpdG98UmVQmRgpljl/&#xa;LTQNKn2jtsUGPSS3CH3Y7r6M9UXGC2FJlt0Beel7oPedOXYxV5xwCSxzZoq+BMS2&#xa;PPTFdrTQP78=&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
-</script><script id="ssl-date" output="2020-09-20T06:40:33+00:00; -7s from scanner time."><elem key="date">2020-09-20T06:40:33+00:00</elem>
-<elem key="delta">-7.0</elem>
+</script><script id="ssl-date" output="2020-09-22T06:18:46+00:00; -10s from scanner time."><elem key="date">2020-09-22T06:18:46+00:00</elem>
+<elem key="delta">-10.0</elem>
 </script></port>
-<port protocol="tcp" portid="49663"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Microsoft HTTPAPI httpd" version="2.0" extrainfo="SSDP/UPnP" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service><script id="http-methods" output="&#xa;  Potentially risky methods: TRACE"><table key="Potentially risky methods">
+<port protocol="tcp" portid="49663"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Microsoft IIS httpd" version="10.0" ostype="Windows" method="probed" conf="10"><cpe>cpe:/a:microsoft:iis:10.0</cpe><cpe>cpe:/o:microsoft:windows</cpe></service><script id="http-methods" output="&#xa;  Potentially risky methods: TRACE"><table key="Potentially risky methods">
 <elem>TRACE</elem>
 </table>
 </script><script id="http-server-header" output="Microsoft-IIS/10.0"><elem>Microsoft-IIS/10.0</elem>
 </script><script id="http-title" output="IIS Windows Server"><elem key="title">IIS Windows Server</elem>
 </script></port>
-<port protocol="tcp" portid="49667"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="msrpc" product="Microsoft Windows RPC" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
-<port protocol="tcp" portid="49669"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="msrpc" product="Microsoft Windows RPC" ostype="Windows" method="probed" conf="10"><cpe>cpe:/o:microsoft:windows</cpe></service></port>
+<port protocol="tcp" portid="49666"><state state="filtered" reason="no-response" reason_ttl="0"/></port>
+<port protocol="tcp" portid="49668"><state state="filtered" reason="no-response" reason_ttl="0"/></port>
 </ports>
-<hostscript><script id="clock-skew" output="mean: 1h23m53s, deviation: 3h07m52s, median: -7s"><elem key="count">5</elem>
-<elem key="stddev">11272</elem>
-<elem key="mean">5033</elem>
-<elem key="median">-7</elem>
-</script><script id="smb-os-discovery" output="&#xa;  OS: Windows Server 2016 Standard Evaluation 14393 (Windows Server 2016 Standard Evaluation 6.3)&#xa;  Computer name: Relevant&#xa;  NetBIOS computer name: RELEVANT\x00&#xa;  Workgroup: WORKGROUP\x00&#xa;  System time: 2020-09-19T23:39:51-07:00&#xa;"><elem key="os">Windows Server 2016 Standard Evaluation 14393</elem>
+<hostscript><script id="clock-skew" output="mean: 1h23m51s, deviation: 3h07m54s, median: -10s"><elem key="mean">5031</elem>
+<elem key="stddev">11274</elem>
+<elem key="count">5</elem>
+<elem key="median">-10</elem>
+</script><script id="smb-os-discovery" output="&#xa;  OS: Windows Server 2016 Standard Evaluation 14393 (Windows Server 2016 Standard Evaluation 6.3)&#xa;  Computer name: Relevant&#xa;  NetBIOS computer name: RELEVANT\x00&#xa;  Workgroup: WORKGROUP\x00&#xa;  System time: 2020-09-21T23:18:09-07:00&#xa;"><elem key="os">Windows Server 2016 Standard Evaluation 14393</elem>
 <elem key="lanmanager">Windows Server 2016 Standard Evaluation 6.3</elem>
 <elem key="server">RELEVANT\x00</elem>
-<elem key="date">2020-09-19T23:39:51-07:00</elem>
+<elem key="date">2020-09-21T23:18:09-07:00</elem>
 <elem key="fqdn">Relevant</elem>
 <elem key="domain_dns">Relevant</elem>
 <elem key="workgroup">WORKGROUP\x00</elem>
@@ -86,10 +86,10 @@
 </script><script id="smb2-security-mode" output="&#xa;  2.02: &#xa;    Message signing enabled but not required"><table key="2.02">
 <elem>Message signing enabled but not required</elem>
 </table>
-</script><script id="smb2-time" output="&#xa;  date: 2020-09-20T06:39:56&#xa;  start_date: 2020-09-20T06:24:29"><elem key="date">2020-09-20T06:39:56</elem>
-<elem key="start_date">2020-09-20T06:24:29</elem>
-</script></hostscript><times srtt="388747" rttvar="74339" to="686103"/>
+</script><script id="smb2-time" output="&#xa;  date: 2020-09-22T06:18:12&#xa;  start_date: 2020-09-22T06:09:34"><elem key="date">2020-09-22T06:18:12</elem>
+<elem key="start_date">2020-09-22T06:09:34</elem>
+</script></hostscript><times srtt="500862" rttvar="111690" to="947622"/>
 </host>
-<runstats><finished time="1600584041" timestr="Sun Sep 20 12:10:41 2020" elapsed="162.83" summary="Nmap done at Sun Sep 20 12:10:41 2020; 1 IP address (1 host up) scanned in 162.83 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+<runstats><finished time="1600755536" timestr="Tue Sep 22 11:48:56 2020" elapsed="75.69" summary="Nmap done at Tue Sep 22 11:48:56 2020; 1 IP address (1 host up) scanned in 75.69 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
 </runstats>
 </nmaprun>

@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Tue Sep 22 11:47:41 2020 as: nmap -sC -sV -p80,135,139,445,3389,49663,49666,49668 -oA nmap/Relevant 10.10.83.165
+Host: 10.10.83.165 ()	Status: Up
+Host: 10.10.83.165 ()	Ports: 80/open/tcp//http//Microsoft HTTPAPI httpd 2.0 (SSDP|UPnP)/, 135/open/tcp//msrpc//Microsoft Windows RPC/, 139/open/tcp//netbios-ssn//Microsoft Windows netbios-ssn/, 445/open/tcp//microsoft-ds//Windows Server 2016 Standard Evaluation 14393 microsoft-ds/, 3389/open/tcp//ms-wbt-server//Microsoft Terminal Services/, 49663/open/tcp//http//Microsoft IIS httpd 10.0/, 49666/filtered/tcp/////, 49668/filtered/tcp/////
+# Nmap done at Tue Sep 22 11:48:56 2020 -- 1 IP address (1 host up) scanned in 75.69 seconds

@@ -68,4 +68,5 @@ Then I bruteforce for directory using dirsearch.py. But found nothing with that 
 
 --> sudo python3 /opt/dirsearch/-dirsearch.py -u http://10.10.28.239/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e php,html,apsx -x 404,403
 
+Let's, enumerate these ports and its running services, and which one is vulneable.
 
